@@ -4,7 +4,7 @@ import { Centroid } from './Centroid';
 
 import { Direction } from './Direction';
 
-import { knotless } from '@rnacanvas/base-pairs';
+import { radializable } from '@rnacanvas/base-pairs';
 
 import { PositionPairs } from '@rnacanvas/base-pairs';
 
@@ -78,8 +78,8 @@ export function arrange(seq: Nucleobase[], basePairs: BasePair[], options: Optio
 
   let originalDirection = (new Direction(seq)).get();
 
-  // remove pseudoknots
-  [, basePairs] = knotless(seq, basePairs);
+  // ignore pseudoknots, conflicting pairs, repeat pairs and self-pairs
+  [, basePairs] = radializable(seq, basePairs);
 
   let pps = (new PositionPairs(seq, basePairs)).get();
 

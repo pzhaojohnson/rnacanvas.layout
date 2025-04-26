@@ -2,7 +2,7 @@ import type { Nucleobase } from './Nucleobase';
 
 import { NucleobaseMock } from './NucleobaseMock';
 
-import { knotless } from '@rnacanvas/base-pairs';
+import { radializable } from '@rnacanvas/base-pairs';
 
 import { mountainPlotTraversal } from '@rnacanvas/position-pairs';
 
@@ -66,8 +66,8 @@ export function untangle(sequence: Nucleobase[], basePairs: BasePair[], options:
   // placeholder variable
   let _: unknown;
 
-  // ignore pseudoknots
-  [_, basePairs] = knotless(sequence, basePairs);
+  // ignore pseudoknots, conflicting pairs, repeat pairs and self-pairs
+  [_, basePairs] = radializable(sequence, basePairs);
 
   let originalSequence = [...sequence];
   let originalCentroid = Point.matching((new Centroid(originalSequence)).get());
